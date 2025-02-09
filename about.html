@@ -34,6 +34,33 @@
             text-align: center;
             padding: 1rem 0;
         }
+        .back-btn {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .back-btn:hover {
+            background-color: #555;
+        }
+        #skills-list {
+            display: none;
+        }
+        #toggle-skills {
+            background-color: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        #toggle-skills:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +75,8 @@
             <p>我是個熱衷於編程和設計的人，喜歡學習新的技術，並將這些技術應用於實際項目中。</p>
             <p>->GBD真的狠會唬爛。</p>
             <h3>我的技能：</h3>
-            <ul>
+            <button id="toggle-skills">顯示技能</button>
+            <ul id="skills-list">
                 <li>C沒有++</li>
                 <li>基本Python</li>
                 <li>Verilog</li>
@@ -58,12 +86,26 @@
             <h3>我的目標：</h3>
             <p>我希望不斷提升自己，在開發和設計領域做到專業，並與其他開發者合作，實現創新的想法。</p>
             <p>->最終實現完全躺平。</p>
-            <a href="index.html" class="back-btn">返回首頁</a>
+            <a href="index.html">返回首頁</a>
         </div>
     </div>
 
     <footer class="footer">
         <p>&copy; 2025 我的網站 | 版權所有</p>
     </footer>
+
+    <script>
+        // 顯示或隱藏技能列表
+        document.getElementById('toggle-skills').addEventListener('click', function() {
+            var skillsList = document.getElementById('skills-list');
+            if (skillsList.style.display === 'none' || skillsList.style.display === '') {
+                skillsList.style.display = 'block';
+                this.textContent = '隱藏技能';
+            } else {
+                skillsList.style.display = 'none';
+                this.textContent = '顯示技能';
+            }
+        });
+    </script>
 </body>
 </html>
