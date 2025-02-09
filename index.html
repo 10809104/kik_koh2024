@@ -17,6 +17,7 @@
             color: #fff;
             padding: 1rem 0;
             text-align: center;
+            position: relative; /* 讓語言切換按鈕相對於 header 定位 */
         }
         .container {
             width: 80%;
@@ -53,22 +54,40 @@
         a:hover {
             color: #333; /* 懸停時變為深灰色 */
         }
+
+        /* 語言切換按鈕樣式 */
+        .lang-switcher {
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: 2px solid #fff; /* 白色邊框 */
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;  /* 將按鈕放置在 header 的底部 */
+            right: 10px;   /* 讓按鈕靠右 */
+            border-radius: 5px; /* 圓角邊框 */
+        }
+        .lang-switcher:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>歡迎來到Kik_Koh的個人網站</h1>
+        <h1 id="header-title">歡迎來到Kik_Koh的個人網站</h1>
+        <!-- 語言切換按鈕，右下角框起來 -->
+        <button class="lang-switcher" onclick="toggleLanguage()">切換語言</button>
     </header>
     <div class="container">
         <div class="main-content">
-            <h2><a href="about.html">關於我</a></h2>
-            <p>我就是Kik_Koh啦!</p>
-            <h2>圖片</h2>
+            <h2><a href="about.html" id="about-link">關於我</a></h2>
+            <p id="about-text">我就是Kik_Koh啦!</p>
+            <h2><a id="avatar-link">圖片</h2>
             <img src="https://raw.githubusercontent.com/10809104/kik_koh2024/refs/heads/main/kik_koh%20avatar.jpg" alt="描述文字" style="width:15%;height:auto;border:2px solid #ddd;box-shadow: 4px 4px 10px rgba(0,0,0,0.1);">
-            <h2>視頻</h2>
+            <h2><a id="video-link">視頻</h2>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/iPeDjwaYiXE?si=rjyxfqJqV2_Ax84W" frameborder="0" allowfullscreen></iframe>
-            <h2>連結</h2>
-            <p>以下是我的社交媒體連結：</p>
+            <h2><a id="social-link">連結</h2>
+            <p id="social-text">以下是我的社交媒體連結：</p>
             <div class="social-links">
                 <a href="https://www.youtube.com/@kik_koh" target="_blank">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
@@ -80,7 +99,35 @@
         </div>
     </div>
     <footer class="footer">
-        <p>&copy; 2025 我的網站 | 版權所有</p>
+        <p>&copy; 2025 Kik_Koh的網站 | 版權所有</p>
     </footer>
+
+    <script>
+        let language = 'zh'; // 預設語言為繁體中文
+
+        function toggleLanguage() {
+            if (language === 'zh') {
+                // 切換到英文
+                document.getElementById('header-title').textContent = 'Welcome to Kik_Koh\'s Personal Website';
+                document.getElementById('about-link').textContent = 'About Me';
+                document.getElementById('about-text').textContent = 'I am Kik_Koh!';
+                document.getElementById('avatar-link').textContent = 'Avatar';
+                document.getElementById('video-link').textContent = 'Video';
+                document.getElementById('social-link').textContent = 'Social';
+                document.getElementById('social-text').textContent = 'Here are my social media links:';
+                language = 'en'; // 設定當前語言為英文
+            } else {
+                // 切換回中文
+                document.getElementById('header-title').textContent = '歡迎來到Kik_Koh的個人網站';
+                document.getElementById('about-link').textContent = '關於我';
+                document.getElementById('about-text').textContent = '我就是Kik_Koh啦!';
+                document.getElementById('avatar-link').textContent = '圖片';
+                document.getElementById('video-link').textContent = '視頻';
+                document.getElementById('social-link').textContent = '連結';
+                document.getElementById('social-text').textContent = '以下是我的社交媒體連結：';
+                language = 'zh'; // 設定當前語言為中文
+            }
+        }
+    </script>
 </body>
 </html>
