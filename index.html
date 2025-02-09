@@ -1,67 +1,77 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的網站</title>
+    <title>我的個人網站</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
         header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        footer {
             background-color: #333;
-            color: white;
+            color: #fff;
+            padding: 1rem 0;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
         }
-        .content {
-            padding: 20px;
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
         }
-        a {
-            color: #4CAF50;
+        .main-content {
+            padding: 1rem;
+            background: #fff;
+            margin-bottom: 2rem;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .social-links a {
+            margin: 0 10px;
             text-decoration: none;
+            color: #333;
         }
-        a:hover {
-            text-decoration: underline;
+        .social-links img {
+            width: 32px;
+            height: 32px;
+            vertical-align: middle;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>歡迎來到我的網站！</h1>
-        <p>這是我用 GitHub Pages 建立的網站。</p>
+        <h1>歡迎來到我的個人網站</h1>
     </header>
-
-    <div class="content">
-        <h2>我的社交媒體連結</h2>
-        <p>歡迎關注我的 YouTube 頻道和 Facebook 頁面：</p>
-        <ul>
-            <li>
-                <a href="https://www.youtube.com/@kik_koh" target="_blank">YouTube 頻道</a>
-            </li>
-            <li>
-                <a href="https://www.facebook.com/kikkoh.2024" target="_blank">Facebook 頁面</a>
-            </li>
-        </ul>
+    <div class="container">
+        <div class="main-content">
+            <h2>關於我</h2>
+            <p>這裡可以放一些關於您的介紹文字。</p>
+            <h2>圖片</h2>
+            <img src="https://via.placeholder.com/600x400" alt="示例圖片" style="width:100%;height:auto;">
+            <h2>視頻</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            <h2>連結</h2>
+            <p>以下是我的社交媒體連結：</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@kik_koh" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+                </a>
+                <a href="https://www.facebook.com/kikkoh.2024" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+                </a>
+            </div>
+        </div>
     </div>
-
-    <footer>
-        <p>© 2025 我的網站 | 版權所有</p>
+    <footer class="footer">
+        <p>&copy; 2025 我的個人網站</p>
     </footer>
-
 </body>
 </html>
