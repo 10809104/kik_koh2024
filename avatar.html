@@ -20,11 +20,17 @@
             text-align: center;
             font-size: 1.5rem;
             font-weight: bold;
+            position: fixed; /* 固定在視窗頂部 */
+            top: 0; /* 頂部對齊視窗 */
+            left: 0;
+            width: 100%; /* 讓 header 填滿整個寬度 */
+            z-index: 1000; /* 確保 header 不會被其他內容覆蓋 */
         }
+
         .container {
             width: 85%;
             max-width: 1000px;
-            margin: 30px auto;
+            margin: 100px auto 30px; /* 調整 margin-top 以避免被 header 遮擋 */
             background: #292929;
             padding: 20px;
             border-radius: 8px;
