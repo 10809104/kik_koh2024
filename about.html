@@ -3,218 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kik_Koh圖片</title>
+    <title>關於Kik_Koh</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.8;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #1e1e1e;
-            color: #ddd;
+            background-color: #f4f4f4;
         }
         header {
             background-color: #333;
             color: #fff;
-            padding: 1.5rem 0;
+            padding: 1rem 0;
             text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            position: fixed; /* 固定在視窗頂部 */
-            top: 0; /* 頂部對齊視窗 */
-            left: 0;
-            width: 100%; /* 讓 header 填滿整個寬度 */
-            z-index: 1000; /* 確保 header 不會被其他內容覆蓋 */
-			justify-content: center; /* Centering the header text */
-            align-items: center;
-        }
-		#language-switcher {
-            position: absolute;
-            top: 50px;
-            right: 20px;
-            background: #444;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            border-radius: 5px;
         }
         .container {
-            width: 85%;
-            max-width: 1000px;
-            margin: 100px auto 30px; /* 調整 margin-top 以避免被 header 遮擋 */
-            background: #292929;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
         }
-        h2, h3 {
-            color: #fff;
-        }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 3px 3px 10px rgba(255, 255, 255, 0.1);
-        }
-        .desc {
-            text-align: center;
-            font-style: italic;
-            color: #bbb;
-        }
-        .back-btn {
-            display: block;
-            width: 200px;
-            margin: 30px auto;
-            text-align: center;
-            background-color: #444;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-        .back-btn:hover {
-            background-color: #666;
+        .main-content {
+            padding: 1rem;
+            background: #fff;
+            margin-bottom: 2rem;
         }
         .footer {
-            background-color: #222;
-            color: #bbb;
+            background-color: #333;
+            color: #fff;
             text-align: center;
-            padding: 15px 0;
-            margin-top: 30px;
+            padding: 1rem 0;
+        }
+        .back-btn {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        .back-btn:hover {
+            background-color: #555;
+        }
+        #skills-list {
+            display: none;
+        }
+        #toggle-skills {
+            background-color: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+        #toggle-skills:hover {
+            background-color: #555;
+        }
+        /* 語言切換按鈕樣式 */
+        #language-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        #language-switcher:hover {
+            background-color: #555;
         }
     </style>
 </head>
 <body>
     <header>
-        <span id="header-text">關於 Kik_Koh 的圖片</span>
-        <select id="language-switcher" onchange="switchLanguage()">
-            <option value="zh-TW">中文</option>
-            <option value="en">English</option>
-        </select>
+        <h1>關於我</h1>
     </header>
 
     <div class="container">
-        <h2 id="section-title">獨特風格的創作</h2>
-        <p id="section-desc">這些圖片由 GPT 依據 Kik_Koh 的創作風格生成，展現了其獨特的藝術視角與視覺表現力。</p>
-
-        <h3 id="image-title-1">頭像設計</h3>
-        <div class="image-container">
-            <img src="kik_koh avatar.jpg" alt="Kik_Koh 頭像">
+        <div class="main-content">
+            <h2>俺叫 Kik_Koh</h2>
+            <p>這是我的個人網站，歡迎來到這裡！</p>
+            <p>我是個熱衷於編程和設計的人，喜歡學習新的技術，並將這些技術應用於實際項目中。</p>
+            <p>->GBD真的狠會唬爛。</p>
+            <h3>我的技能：</h3>
+            <button id="toggle-skills">顯示技能</button>
+            <ul id="skills-list">
+                <li>C沒有++</li>
+                <li>基本Python</li>
+                <li>Verilog</li>
+                <li>Stop motion(?)</li>
+                <li>唬爛</li>
+            </ul>
+            <h3>我的目標：</h3>
+            <h4>我的目標：</h4>
+            <p>我希望不斷提升自己，在開發和設計領域做到專業，並與其他開發者合作，實現創新的想法。</p>
+            <p>->最終實現完全躺平。</p>
+            <a href="index.html">返回首頁</a>
         </div>
-        <p class="desc" id="image-desc-1">這張頭像融合了個性與美學，展現 Kik_Koh 的獨特氛圍。</p>
-
-        <h3 id="image-title-2">橫幅設計</h3>
-        <div class="image-container">
-            <img src="kik_koh banner.jpg" alt="Kik_Koh 橫幅">
-        </div>
-        <p class="desc" id="image-desc-2">此橫幅運用色彩與構圖來強調 Kik_Koh 創作理念，並營造出鮮明的視覺效果。</p>
-
-        <h3 id="image-title-3">初始設計</h3>
-        <div class="image-container">
-            <img src="kik_koh intro.jpg" alt="Kik_Koh">
-        </div>
-        <p class="desc" id="image-desc-3">這是根據 Kik_Koh 風格設計的頭貼與橫幅，結合了智慧、幽默與科技創意的元素，並以簡潔現代的視覺呈現。</p>
-
-        <h3 id="image-title-4">Kik_Koh頭鐵1</h3>
-        <div class="image-container">
-            <img src="kik_koh1.jpg" alt="Kik_Koh'head1">
-        </div>
-        <p class="desc" id="image-desc-4">這是根據 Kik_Koh 的藝術家身份設計的頭貼與橫幅，強調創意、敘事和視覺表現力。</p>
-
-        <h3 id="image-title-5">Kik_Koh頭鐵2</h3>
-        <div class="image-container">
-            <img src="kik_koh2.jpg" alt="Kik_Koh'head2">
-        </div>
-        <p class="desc" id="image-desc-5">這是為 Kik_Koh 設計的大頭照，旨在以簡約且富有表現力的藝術風格呈現。希望這能展現作為一名專注於視覺敘事的藝術家的獨特性！</p>
-
-        <h3 id="section-title-1">創作理念</h3>
-        <p id="section-desc-1">這些作品以簡約而富有張力的視覺風格為核心，強調線條感與色彩搭配，試圖傳達獨特的美感與概念。</p>
-        <p id="section-desc-2">這些圖片僅作為靈感參考，請尊重原創，避免未經授權的使用。</p>
-
-        <a href="index.html" class="back-btn" id="back-btn">返回首頁</a>
     </div>
 
     <footer class="footer">
-        <span id="footer-text">&copy; 2025 Kik_Koh | 版權所有</span>
+        <p>&copy; 2025 我的網站 | 版權所有</p>
+        <p>&copy; 2025 Kik_Koh的網站 | 版權所有</p>
     </footer>
-	
-	<script>
-        const textContent = {
-            "zh-TW": {
-                header: "關於 Kik_Koh 的圖片",
-                sectionTitle: "獨特風格的創作",
-                sectionDesc: "這些圖片由 GPT 依據 Kik_Koh 的創作風格生成，展現了其獨特的藝術視角與視覺表現力。",
-                imageTitle1: "頭像設計",
-                imageDesc1: "這張頭像融合了個性與美學，展現 Kik_Koh 的獨特氛圍。",
-				imageTitle2: "橫幅設計",
-                imageDesc2: "此橫幅運用色彩與構圖來強調 Kik_Koh 創作理念，並營造出鮮明的視覺效果。",
-				imageTitle3: "初始設計",
-                imageDesc3: "這是根據 Kik_Koh 風格設計的頭貼與橫幅，結合了智慧、幽默與科技創意的元素，並以簡潔現代的視覺呈現。",
-				imageTitle4: "Kik_Koh頭鐵1",
-                imageDesc4: "這是根據 Kik_Koh 的藝術家身份設計的頭貼與橫幅，強調創意、敘事和視覺表現力。",
-				imageTitle5: "Kik_Koh頭鐵2",
-                imageDesc5: "這是為 Kik_Koh 設計的大頭照，旨在以簡約且富有表現力的藝術風格呈現。希望這能展現作為一名專注於視覺敘事的藝術家的獨特性！",
-				sectionTitle1: "創作理念",
-                sectionDesc1: "這些作品以簡約而富有張力的視覺風格為核心，強調線條感與色彩搭配，試圖傳達獨特的美感與概念。",
-                sectionDesc2: "這些圖片僅作為靈感參考，請尊重原創，避免未經授權的使用。",
-                backBtn: "返回首頁",
-                footerText: "© 2025 Kik_Koh | 版權所有"
-            },
-            "en": {
-                header: "About Kik_Koh's Images",
-                sectionTitle: "Unique Style Creations",
-                sectionDesc: "These images were generated by GPT based on Kik_Koh's creative style, showcasing its unique artistic perspective and visual expression.",
-                imageTitle1: "Avatar Design",
-                imageDesc1: "This avatar blends personality and aesthetics, showcasing Kik_Koh's unique vibe.",
-				imageTitle2: "Banner Design",
-                imageDesc2: "This banner uses color and composition to emphasize Kik_Koh's creative philosophy and create a striking visual effect.",
-				imageTitle3: "Initial Design",
-                imageDesc3: "This is a header and banner designed in the style of Kik_Koh, combining elements of wisdom, humor and technological creativity, and presented in a simple and modern visual style.",
-				imageTitle4: "Kik_Koh Head Iron 1",
-                imageDesc4: "This is a header and banner designed based on Kik_Koh's artist identity, emphasizing creativity, narrative and visual expression.",
-				imageTitle5: "Kik_Koh Head Iron 2",
-                imageDesc5: "This is a headshot designed for Kik_Koh, and is intended to be presented in a minimalistic yet expressive art style. Hopefully this shows the uniqueness of being an artist focused on visual storytelling!",
-				sectionTitle1: "Creative Concept",
-                sectionDesc1: "These works are centered on a simple yet powerful visual style, emphasizing the sense of lines and color matching, attempting to convey unique beauty and concepts.",
-                sectionDesc2: "These images are for inspiration only. Please respect the originality and avoid unauthorized use.",
-                backBtn: "Back to Home",
-                footerText: "© 2025 Kik_Koh | All Rights Reserved"
+
+    <!-- 語言切換按鈕 -->
+    <button id="language-switcher">switch language</button>
+    <script>
+        // 顯示或隱藏技能列表
+        document.getElementById('toggle-skills').addEventListener('click', function() {
+            var skillsList = document.getElementById('skills-list');
+            if (skillsList.style.display === 'none' || skillsList.style.display === '') {
+                skillsList.style.display = 'block';
+                this.textContent = '隱藏技能';
+                updateSkillButtonText(); // 更新按鈕文本
+            } else {
+                skillsList.style.display = 'none';
+                this.textContent = '顯示技能';
+                updateSkillButtonText(); // 更新按鈕文本
             }
-        };
-
-        function switchLanguage() {
-            const selectedLang = document.getElementById("language-switcher").value;
-            const content = textContent[selectedLang];
-
-            document.getElementById("header-text").textContent = content.header;
-            document.getElementById("section-title").textContent = content.sectionTitle;
-            document.getElementById("section-desc").textContent = content.sectionDesc;
-            document.getElementById("image-title-1").textContent = content.imageTitle1;
-            document.getElementById("image-desc-1").textContent = content.imageDesc1;
-			document.getElementById("image-title-2").textContent = content.imageTitle2;
-            document.getElementById("image-desc-2").textContent = content.imageDesc2;
-			document.getElementById("image-title-3").textContent = content.imageTitle3;
-            document.getElementById("image-desc-3").textContent = content.imageDesc3;
-			document.getElementById("image-title-4").textContent = content.imageTitle4;
-            document.getElementById("image-desc-4").textContent = content.imageDesc4;
-			document.getElementById("image-title-5").textContent = content.imageTitle5;
-            document.getElementById("image-desc-5").textContent = content.imageDesc5;
-			document.getElementById("section-title-1").textContent = content.sectionTitle1;
-            document.getElementById("section-desc-1").textContent = content.sectionDesc1;
-            document.getElementById("section-desc-2").textContent = content.sectionDesc2;
-            document.getElementById("back-btn").textContent = content.backBtn;
-            document.getElementById("footer-text").textContent = content.footerText;
-			
-			document.title = selectedLang === 'zh-TW' ? 'Kik_Koh圖片' : 'Kik_Koh Image';
+        });
+        // 更新技能按鈕文本
+        function updateSkillButtonText() {
+            var lang = document.documentElement.lang;
+            var button = document.getElementById('toggle-skills');
+            var skillsList = document.getElementById('skills-list');
+            if (skillsList.style.display === 'none' || skillsList.style.display === '') {
+                if (lang === 'en') {
+                    button.textContent = 'Show Skills';
+                } else {
+                    button.textContent = '顯示技能';
+                }
+            } else {
+                if (lang === 'en') {
+                    button.textContent = 'Hide Skills';
+                } else {
+                    button.textContent = '隱藏技能';
+                }
+            }
         }
+        // 切換語言功能
+        document.getElementById('language-switcher').addEventListener('click', function() {
+            var currentLang = document.documentElement.lang;
+            if (currentLang === 'zh-Hant') {
+                // 切換為英文
+                document.documentElement.lang = 'en';
+                document.title = 'About Kik_Koh';
+                document.querySelector('h1').textContent = 'About Me';
+                document.querySelector('h2').textContent = 'My name is Kik_Koh';
+                document.querySelectorAll('p')[0].textContent = 'This is my personal website, welcome!';
+                document.querySelectorAll('p')[1].textContent = 'I am passionate about programming and design, love learning new technologies, and applying them to real-world projects.';
+                document.querySelectorAll('p')[2].textContent = '-> GBD really knows how to bluff.';
+                document.querySelector('h3').textContent = 'My Skills:';
+                document.getElementById('toggle-skills').textContent = 'Show Skills';
+                document.querySelectorAll('li')[0].textContent = 'C without ++';
+                document.querySelectorAll('li')[1].textContent = 'Basic Python';
+                document.querySelectorAll('li')[2].textContent = 'Verilog';
+                document.querySelectorAll('li')[3].textContent = 'Stop motion(?)';
+                document.querySelectorAll('li')[4].textContent = 'Bluffing';
+                document.querySelector('h4').textContent = 'My Goal:';
+                document.querySelectorAll('p')[3].textContent = 'I hope to continue improving myself, becoming a professional in development and design, and collaborating with other developers to bring innovative ideas to life.';
+                document.querySelectorAll('p')[4].textContent = '-> Ultimately, to achieve total relaxation.';
+                document.querySelector('a').textContent = 'Back to Home';
+            } else {
+                // 切換為繁體中文
+                document.documentElement.lang = 'zh-Hant';
+                document.title = '關於Kik_Koh';
+                document.querySelector('h1').textContent = '關於我';
+                document.querySelector('h2').textContent = '俺叫 Kik_Koh';
+                document.querySelectorAll('p')[0].textContent = '這是我的個人網站，歡迎來到這裡！';
+                document.querySelectorAll('p')[1].textContent = '我是個熱衷於編程和設計的人，喜歡學習新的技術，並將這些技術應用於實際項目中。';
+                document.querySelectorAll('p')[2].textContent = '->GBD真的狠會唬爛。';
+                document.querySelector('h3').textContent = '我的技能：';
+                document.getElementById('toggle-skills').textContent = '顯示技能';
+                document.querySelectorAll('li')[0].textContent = 'C沒有++';
+                document.querySelectorAll('li')[1].textContent = '基本Python';
+                document.querySelectorAll('li')[2].textContent = 'Verilog';
+                document.querySelectorAll('li')[3].textContent = 'Stop motion(?)';
+                document.querySelectorAll('li')[4].textContent = '唬爛';
+                document.querySelector('h4').textContent = '我的目標：';
+                document.querySelectorAll('p')[3].textContent = '我希望不斷提升自己，在開發和設計領域做到專業，並與其他開發者合作，實現創新的想法。';
+                document.querySelectorAll('p')[4].textContent = '->最終實現完全躺平。';
+                document.querySelector('a').textContent = '返回首頁';
+            }
+            updateSkillButtonText(); // 更新按鈕文本
+        });
     </script>
-	
 </body>
 </html>
