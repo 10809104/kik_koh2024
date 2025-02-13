@@ -50,11 +50,21 @@
             color: #000; /* 設置為黑色 */
         }
 
-        image {
+        /* 讓主要內容的圖片（如 avatar.jpg）置中 */
+        .main-content img {
             max-width: 100%;
             height: auto;
             display: block;
             margin: 0 auto; /* 讓圖片置中 */
+        }
+
+        /* 讓社交媒體圖標不受影響，保持原本的對齊方式 */
+        .social-links img {
+            display: inline-block;
+            margin: 0 10px; /* 保持橫向排列，並設定間距 */
+            width: 32px;
+            height: 32px;
+            vertical-align: middle; /* 讓圖標在文字的垂直方向對齊 */
         }
 
         /* 懸停時顏色變化 */
@@ -106,7 +116,7 @@
             <p id="about-text">我就是Kik_Koh啦!</p>
             <a href="avatar.html">
             <h2 id="avatar-link">圖片</h2> 
-            <image src="https://raw.githubusercontent.com/10809104/kik_koh2024/refs/heads/main/kik_koh%20avatar.jpg" alt="描述文字"></a>
+                <img src="https://raw.githubusercontent.com/10809104/kik_koh2024/refs/heads/main/kik_koh%20avatar.jpg" alt="描述文字"></a>
             <h2><a href="https://www.youtube.com/@kik_koh/videos" id="video-link">視頻</a></h2>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/iPeDjwaYiXE?si=rjyxfqJqV2_Ax84W" frameborder="0" allowfullscreen></iframe>
