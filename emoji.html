@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>React + SVG 捏臉 (折疊控制面板)</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 20px;
+  }
+  .canvas {
+    border: 1px solid #ccc;
+    width: 320px;
+    height: 320px;
+  }
+  .controls {
+    max-width: 320px;
+    max-height: 600px; /* 限高 */
+    overflow-y: auto; /* 加垂直滾動 */
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-sizing: border-box;
+    background: #fafafa;
+  }
+  .control-group {
+    margin-bottom: 12px;
+  }
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  input[type="range"] {
+    width: 100%;
+  }
+
+  /* 折疊區塊 */
+  .accordion {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  .accordion-header {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 6px 4px;
+    user-select: none;
+    background: #e2e2e2;
+    border-radius: 4px;
+  }
+  .accordion-content {
+    padding: 8px 10px 12px;
+    display: none;
+  }
+  .accordion-content.show {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<script>
+  const e = React.createElement;
+  const { useState } = React;
+
+  function FaceShape(props) {
+    return e('ellipse', {
+      cx: 150,
+      cy: 150,
+      rx: props.width,
+      ry: props.height,
+      fill: props.skinColor,
+      stroke: '#b58360',
+      strokeWidth: 3,
+    });
+  }
+
+  function Hair(props) {
+    const topY = 150 - props.height / 2 - 50;
+
+    // 1. 一小搓頭髮
+    if (props.style === 'smallTuft') {
+      return e('path', {
+        d: `M140 ${topY + 10} Q150 ${topY - 10} 160 ${topY + 10}`,
+        stroke: props.color,
+        'stroke-width': 5,
+        fill: 'none',
+        'stroke-linecap': 'round'
+      });
+    }
+
+    // 2. 獵人的大杰 (尖刺)
+    if (props.style === 'gon') {
+      return e('path', {
+        d: `
+          M90 ${topY + 50} 
+          L100 ${topY} L110 ${topY + 50}
+          L120 ${topY} L130 ${topY + 50}
+          L140 ${topY} L150 ${topY + 50}
+          L160 ${topY} L170 ${topY + 50}
+          L180 ${topY} L190 ${topY + 50} Z
+        `,
+        fill: props.color,
+      });
+    }
+
+    // 3. 蘑菇頭
+    if (props.style === 'mushroom') {
+      return e('path', {
+        d: `
+          M70 ${topY + 30} 
+          Q150 ${topY - 40} 230 ${topY + 30} 
+          L230 ${topY + 80} Q150 ${topY + 40} 70 ${topY + 80} Z
+        `,
+        fill: props.color,
+      });
+    }
+
+    // 4. 川普頭
+    if (props.style === 'trump') {
+      return e('path', {
+        d: `
+          M80 ${topY + 20}
+          Q130 ${topY - 60} 220 ${topY}
+          Q190 ${topY + 40} 150 ${topY + 30}
+          Q110 ${topY + 40} 80 ${topY + 20} Z
+        `,
+        fill: props.color,
+      });
+    }
+
+    // 5. 爆炸頭
+    if (props.style === 'afro') {
+      return e('circle', {
+        cx: 150,
+        cy: topY + 70,
+        r: 90,
+        fill: props.color,
+      });
+    }
+
+    // 6. 一般頭
+    if (props.style === 'normal') {
+      return e('path', {
+        d: `
+          M70 ${topY + 30} 
+          Q150 ${topY - 20} 230 ${topY + 30}
+          Q150 ${topY + 20} 70 ${topY + 30} Z
+        `,
+        fill: props.color,
+      });
+    }
+
+    // 7. 光頭
+    if (props.style === 'bald') {
+      return null; // 沒有頭髮
+    }
+
+    return null; // 未定義樣式
+  }
+
+  function Eyes(props) {
+    return e(React.Fragment, null,
+      e('circle', {
+        cx: 150 - props.eyeOffsetX,
+        cy: 150 - props.eyeOffsetY,
+        r: props.eyeSize,
+        fill: props.eyeColor,
+      }),
+      e('circle', {
+        cx: 150 + props.eyeOffsetX,
+        cy: 150 - props.eyeOffsetY,
+        r: props.eyeSize,
+        fill: props.eyeColor,
+      })
+    );
+  }
+
+  function Eyebrows(props) {
+    return e(React.Fragment, null,
+      e('rect', {
+        x: 150 - props.browWidth - 10,
+        y: 150 - props.browOffsetY,
+        width: props.browWidth,
+        height: props.browHeight,
+        fill: props.browColor,
+        rx: 5,
+      }),
+      e('rect', {
+        x: 150 + 10,
+        y: 150 - props.browOffsetY,
+        width: props.browWidth,
+        height: props.browHeight,
+        fill: props.browColor,
+        rx: 5,
+      })
+    );
+  }
+
+  function Nose(props) {
+    return e('polygon', {
+      points: `150,${150 + props.size / 2} ${150 - props.size / 2},${150 - props.size / 2} ${150 + props.size / 2},${150 - props.size / 2}`,
+      fill: '#d9a066',
+      stroke: '#b58360',
+      strokeWidth: 2,
+    });
+  }
+
+  function Mouth(props) {
+    if (props.shape === 'smile') {
+      return e('path', {
+        d: `M${150 - props.size},${170} Q${150},${170 + props.size / 2} ${150 + props.size},${170}`,
+        stroke: props.color,
+        strokeWidth: 4,
+        fill: 'none',
+        strokeLinecap: 'round',
+      });
+    }
+    if (props.shape === 'flat') {
+      return e('rect', {
+        x: 150 - props.size,
+        y: 170,
+        width: props.size * 2,
+        height: props.size / 3,
+        fill: props.color,
+        rx: 5,
+      });
+    }
+    return null;
+  }
+
+  function FaceCanvas(props) {
+    return e('svg', {width: 300, height: 300, viewBox: '0 0 300 300'},
+      e(FaceShape, {
+        width: props.faceWidth,
+        height: props.faceHeight,
+        skinColor: props.skinColor,
+      }),
+      e(Hair, {
+        style: props.hairStyle,
+        color: props.hairColor,
+        height: props.faceHeight,
+      }),
+      e(Eyes, {
+        eyeSize: props.eyeSize,
+        eyeColor: props.eyeColor,
+        eyeOffsetX: props.eyeOffsetX,
+        eyeOffsetY: props.eyeOffsetY,
+      }),
+      e(Eyebrows, {
+        browWidth: props.browWidth,
+        browHeight: props.browHeight,
+        browColor: props.browColor,
+        browOffsetY: props.browOffsetY,
+      }),
+      e(Nose, {size: props.noseSize}),
+      e(Mouth, {
+        size: props.mouthSize,
+        shape: props.mouthShape,
+        color: props.mouthColor,
+      })
+    );
+  }
+
+  // 新增 Accordion (折疊區塊) 元件
+  function Accordion(props) {
+    const [open, setOpen] = useState(false);
+    return e('div', {className: 'accordion'},
+      e('div', {
+        className: 'accordion-header',
+        onClick: () => setOpen(!open),
+        role: 'button',
+        tabIndex: 0,
+        onKeyDown: (e) => { if (e.key === 'Enter') setOpen(!open) }
+      }, props.title),
+      e('div', {className: 'accordion-content ' + (open ? 'show' : '')},
+        props.children
+      )
+    );
+  }
+
+  function ControlsPanel(props) {
+    const state = props.state;
+    const setState = props.setState;
+
+    function updateField(field, value) {
+      setState({...state, [field]: value});
+    }
+
+    return e('div', {className: 'controls'},
+      e(Accordion, {title: '臉部'},
+        e('div', {className: 'control-group'},
+          e('label', null, `臉寬: ${state.faceWidth}`),
+          e('input', {
+            type: 'range',
+            min: 50, max: 150,
+            value: state.faceWidth,
+            onInput: e => updateField('faceWidth', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, `臉高: ${state.faceHeight}`),
+          e('input', {
+            type: 'range',
+            min: 50, max: 150,
+            value: state.faceHeight,
+            onInput: e => updateField('faceHeight', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '膚色'),
+          e('input', {
+            type: 'color',
+            value: state.skinColor,
+            onInput: e => updateField('skinColor', e.target.value),
+          }),
+        ),
+      ),
+
+      e(Accordion, {title: '頭髮'},
+        e('div', {className: 'control-group'},
+          e('label', null, '髮型'),
+          e('select', {
+            value: state.hairStyle,
+            onChange: e => updateField('hairStyle', e.target.value),
+          },
+            e('option', {value: 'smallTuft'}, '一小搓頭髮'),
+            e('option', {value: 'gon'}, '尖刺'),
+            e('option', {value: 'mushroom'}, '蘑菇頭'),
+            e('option', {value: 'trump'}, '川普頭'),
+            e('option', {value: 'afro'}, '爆炸頭'),
+            e('option', {value: 'normal'}, '一般頭'),
+            e('option', {value: 'bald'}, '光頭'),
+          )
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '髮色'),
+          e('input', {
+            type: 'color',
+            value: state.hairColor,
+            onInput: e => updateField('hairColor', e.target.value),
+          }),
+        ),
+      ),
+
+      e(Accordion, {title: '眼睛'},
+        e('div', {className: 'control-group'},
+          e('label', null, `眼睛大小: ${state.eyeSize}`),
+          e('input', {
+            type: 'range',
+            min: 5, max: 30,
+            value: state.eyeSize,
+            onInput: e => updateField('eyeSize', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '眼睛顏色'),
+          e('input', {
+            type: 'color',
+            value: state.eyeColor,
+            onInput: e => updateField('eyeColor', e.target.value),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, `眼睛左右偏移: ${state.eyeOffsetX}`),
+          e('input', {
+            type: 'range',
+            min: 10, max: 70,
+            value: state.eyeOffsetX,
+            onInput: e => updateField('eyeOffsetX', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, `眼睛上下偏移: ${state.eyeOffsetY}`),
+          e('input', {
+            type: 'range',
+            min: 0, max: 50,
+            value: state.eyeOffsetY,
+            onInput: e => updateField('eyeOffsetY', Number(e.target.value)),
+          }),
+        ),
+      ),
+
+      e(Accordion, {title: '眉毛'},
+        e('div', {className: 'control-group'},
+          e('label', null, `眉毛寬度: ${state.browWidth}`),
+          e('input', {
+            type: 'range',
+            min: 10, max: 60,
+            value: state.browWidth,
+            onInput: e => updateField('browWidth', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, `眉毛高度: ${state.browHeight}`),
+          e('input', {
+            type: 'range',
+            min: 4, max: 20,
+            value: state.browHeight,
+            onInput: e => updateField('browHeight', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '眉毛顏色'),
+          e('input', {
+            type: 'color',
+            value: state.browColor,
+            onInput: e => updateField('browColor', e.target.value),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, `眉毛垂直偏移: ${state.browOffsetY}`),
+          e('input', {
+            type: 'range',
+            min: 10, max: 50,
+            value: state.browOffsetY,
+            onInput: e => updateField('browOffsetY', Number(e.target.value)),
+          }),
+        ),
+      ),
+
+      e(Accordion, {title: '鼻子'},
+        e('div', {className: 'control-group'},
+          e('label', null, `鼻子大小: ${state.noseSize}`),
+          e('input', {
+            type: 'range',
+            min: 10, max: 50,
+            value: state.noseSize,
+            onInput: e => updateField('noseSize', Number(e.target.value)),
+          }),
+        ),
+      ),
+
+      e(Accordion, {title: '嘴巴'},
+        e('div', {className: 'control-group'},
+          e('label', null, `嘴巴大小: ${state.mouthSize}`),
+          e('input', {
+            type: 'range',
+            min: 10, max: 40,
+            value: state.mouthSize,
+            onInput: e => updateField('mouthSize', Number(e.target.value)),
+          }),
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '嘴巴形狀'),
+          e('select', {
+            value: state.mouthShape,
+            onChange: e => updateField('mouthShape', e.target.value),
+          },
+            e('option', {value: 'smile'}, '微笑'),
+            e('option', {value: 'flat'}, '平嘴'),
+          )
+        ),
+        e('div', {className: 'control-group'},
+          e('label', null, '嘴巴顏色'),
+          e('input', {
+            type: 'color',
+            value: state.mouthColor,
+            onInput: e => updateField('mouthColor', e.target.value),
+          }),
+        ),
+      ),
+    );
+  }
+
+  function exportToImage() {
+    const svgElement = document.querySelector('svg');
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 300;
+      canvas.height = 300;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const pngUrl = canvas.toDataURL('image/png');
+
+      const output = document.getElementById('image-output');
+      output.innerHTML = '';
+      const resultImg = document.createElement('img');
+      resultImg.src = pngUrl;
+      resultImg.style.border = '1px solid #ccc';
+      resultImg.style.width = '150px';
+      output.appendChild(resultImg);
+
+      // 下載連結
+      const link = document.createElement('a');
+      link.href = pngUrl;
+      link.download = 'face.png';
+      link.innerText = '下載圖片';
+      link.style.display = 'block';
+      link.style.marginTop = '5px';
+      output.appendChild(link);
+
+      URL.revokeObjectURL(url);
+    };
+
+    img.src = url;
+  }
+
+  function App() {
+    const [state, setState] = useState({
+      faceWidth: 100,
+      faceHeight: 120,
+      skinColor: '#f5c6a5',
+      hairStyle: 'trump',
+      hairColor: '#4a2c19',
+      eyeSize: 15,
+      eyeColor: '#2c3e50',
+      eyeOffsetX: 40,
+      eyeOffsetY: 15,
+      browWidth: 40,
+      browHeight: 10,
+      browColor: '#3e2723',
+      browOffsetY: 40,
+      noseSize: 30,
+      mouthSize: 20,
+      mouthShape: 'smile',
+      mouthColor: '#b33a3a',
+    });
+
+    return e('div', {style: {display: 'flex', gap: '40px'}},
+      e('div', {className: 'canvas'},
+        e(FaceCanvas, state),
+        e('button', {
+          onClick: () => exportToImage(),
+          style: { marginTop: '20px', width: '100%' }
+        }, '匯出圖片'),
+        e('div', {id: 'image-output', style: {marginTop: '10px'}})
+      ),
+      e(ControlsPanel, {state: state, setState: setState})
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(e(App));
+</script>
+
+</body>
+</html>
